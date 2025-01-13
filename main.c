@@ -57,8 +57,21 @@ void update_snake(int listex[100], int listey[100], int *tailleserpent, char dir
 
     if (listex[0] == *pomme_x && listey[0] == *pomme_y) {
         (*tailleserpent)++;
-        *pomme_x = 1 + rand() % (18 - 2);
+        *pomme_x = 1 + rand() % (18 - 2); // initialiser nouvelle pomme
         *pomme_y = 1 + rand() % (18 - 2);
+        while(1){ // boucle pour regénérer des coordonnées pour la pomme jusqu'à ce qu'elle n'apparaisse pas dans le serpent
+            int change=0; // bool pour savoir si ça la valeur des pommes a changée
+            for(int i=0; i<*tailleserpent; i++){
+                if(*pomme_x==listex[i] && *pomme_y==listey[i]){
+                    *pomme_x = 1 + rand() % (18 - 2);
+                    *pomme_y = 1 + rand() % (18 - 2);
+                    change=1; // la valeur a été changée, la pomme est encore dans le serpent, on recommence
+                }
+            }
+            if(change==0){ // on casse la boucle si la pomme n'est pas dans le serpent
+                break;
+            }
+        }
     }
 
     for (int i = 1; i < *tailleserpent; i++) { // pour que les bouts du serpent se suivent
@@ -126,8 +139,21 @@ int main() {
 
     char direction = 'd'; // direction de depart
 
-    int pomme_x =1 + rand() % (18 - 2); // lieu d'apparition de la premiere pomme, elle peut spawn sur le serpent donc elle apparaitra quand le serpent a quitté sa zone
-    int pomme_y =1 + rand() % (18 - 2);
+    int pomme_x = 1 + rand() % (18 - 2); // initialiser premiere pomme
+    int pomme_y = 1 + rand() % (18 - 2);
+    while(1){ // boucle pour regénérer des coordonnées pour la pomme jusqu'à ce qu'elle n'apparaisse pas dans le serpent
+            int change=0; // bool pour savoir si ça la valeur des pommes a changée
+            for(int i=0; i<tailleserpent; i++){
+                if(pomme_x==listex[i] && pomme_y==listey[i]){
+                    pomme_x = 1 + rand() % (18 - 2);
+                    pomme_y = 1 + rand() % (18 - 2);
+                    change=1; // la valeur a été changée, la pomme est encore dans le serpent, on recommence
+                }
+            }
+            if(change==0){ // on casse la boucle si la pomme n'est pas dans le serpent
+                break;
+            }
+        }
 
     srand(time(NULL));
 
